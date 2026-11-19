@@ -63,17 +63,42 @@ CREATE DATABASE itsm_db;
 ### 2. Backend (Spring Boot)
 ```bash
 cd backend
-./mvnw spring-boot:run
+# Run with PostgreSQL (default)
+mvn spring-boot:run
+
+# Or run with embedded in-memory H2 (zero DB setup needed):
+mvn spring-boot:run -Dspring-boot.run.profiles=dev
 # Server runs at http://localhost:8080
 ```
 
-### 3. Frontend (React)
+### 3. Frontend (React + Vite)
 ```bash
 cd frontend
 npm install
 npm run dev
 # App runs at http://localhost:5173
 ```
+
+---
+
+## 🔑 Pre-Seeded Test Accounts
+
+| Role | Email | Password | Pre-seeded Features |
+|:---|:---|:---|:---|
+| **ADMIN** | `admin@org.com` | `admin123` | KPI summary cards, SLA violation monitors, reassignment, user account management |
+| **TECHNICIAN** | `tech@org.com` | `tech123` | Network/Hardware/Security skill profile, assigned ticket queue, investigate, resolve |
+| **TECHNICIAN** | `tech2@org.com` | `tech123` | Application/Cloud/DB skill profile, workload queue |
+| **EMPLOYEE** | `emp@org.com` | `emp123` | Report incidents, live calculated priority preview, ticket tracking, closure & rating |
+
+---
+
+## 🧪 Running the Core Validation Suite
+```bash
+cd backend
+mvn test-compile
+java -cp "target/classes:target/test-classes:..." com.itsm.TestRunner
+```
+See [`docs/test-cases.md`](docs/test-cases.md) for 15 documented test cases covering lifecycle, patterns, boundary conditions, and security.
 
 ---
 
